@@ -1,6 +1,6 @@
-#include <unistd.h>
+#include "rush02.h"
 
-static int check_argument(int argc)
+static int	check_argument(int argc)
 {
 	if (argc != 2)
 	{
@@ -20,7 +20,7 @@ static int	input_len(char *str)
 	return (i);
 }
 
-int check_first_char(char *str)
+int	check_first_char(char *str)
 {
 	int len;
 	
@@ -36,7 +36,7 @@ int check_first_char(char *str)
 	return (1);
 }
 
-int check_invalid_input(int argc, char *argv)
+int	check_invalid_input(int argc, char *argv)
 {
 	int i;
 
