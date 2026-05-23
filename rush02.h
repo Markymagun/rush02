@@ -5,12 +5,12 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-typedef struct s_
+typedef struct s_dict
 {
-    
-}	t_;
+	char	*key;
+	char	*value;
+}	t_dict;
 
-int check_first_char(char *str);
-int check_invalid_input(int argc, char *argv);
+int	get_inputs(int argc, char **argv, char **dict_file, char **num_str);
 
 #endif
