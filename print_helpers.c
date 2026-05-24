@@ -38,3 +38,19 @@ int	print_zero_case(t_dict *dict, int size)
 	write(1, "\n", 1);
 	return (1);
 }
+
+int	pre_check_all(t_dict *dict, int size, char *num_str)
+{
+	int		groups;
+	char	chunk[4];
+
+	groups = (ft_strlen(num_str) + 2) / 3;
+	while (groups > 0)
+	{
+		get_chunk(num_str, chunk, ft_strlen(num_str), groups);
+		if (!process_group(dict, size, chunk, groups, 0))
+			return (0);
+		groups--;
+	}
+	return (1);
+}

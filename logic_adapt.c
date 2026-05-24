@@ -6,7 +6,7 @@
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/24 16:44:52 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 19:30:44 by paprathu         ###   ########.fr       */
+/*   Updated: 2026/05/24 19:50:25 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,15 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 {
 	int		groups;
 	char	chunk[4];
-	char	*zero_res;
+	char	*z;
 
+	z = find_in_dict(dict, size, "0");
+	if (num_str[0] == '0' && num_str[1] == '\0' && !z)
+		return (write(1, "Dict Error\n", 11), (void)0);
 	if (num_str[0] == '0' && num_str[1] == '\0')
-	{
-		zero_res = find_in_dict(dict, size, "0");
-		if (!zero_res)
-			return (write(1, "Dict Error\n", 11), (void)0);
-		return (write(1, zero_res, ft_strlen(zero_res)),
-			write(1, "\n", 1), (void)0);
-	}
+		return (write(1, z, ft_strlen(z)), write(1, "\n", 1), (void)0);
+	if (!pre_check_all(dict, size, num_str))
+		return (write(1, "Dict Error\n", 11), (void)0);
 	groups = (ft_strlen(num_str) + 2) / 3;
 	while (groups > 0)
 	{
@@ -91,9 +90,8 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 		if (groups < (int)(ft_strlen(num_str) + 2) / 3
 			&& !(chunk[0] == '0' && chunk[1] == '0' && chunk[2] == '0'))
 			write_space_or_comma(dict);
-		if (!process_group(dict, size, chunk, groups))
+		if (!process_group(dict, size, chunk, groups--))
 			return (write(1, "Dict Error\n", 11), (void)0);
-		groups--;
 	}
 	write(1, "\n", 1);
 }
