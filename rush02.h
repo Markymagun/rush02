@@ -37,5 +37,6 @@ int		print_three_digits(t_dict *dict, int size, char *str);
 t_dict	*parse_dict(char *file_path, int *size);
 int		ft_strlen(char *str);
 int		count_lines(char *file_path);
+void	write_space_or_comma(t_dict *dict);
 
 #endif

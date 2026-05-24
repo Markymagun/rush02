@@ -7,7 +7,8 @@ SRCS = main.c \
        parse_dict.c \
        parse_utils.c \
        logic_adapt.c \
-       print.c
+       print.c \
+       print_helpers.c
 
 OBJS = $(SRCS:.c=.o)
 
