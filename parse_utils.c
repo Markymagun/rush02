@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/24 16:18:57 by paprathu          #+#    #+#             */
+/*   Updated: 2026/05/24 16:18:57 by paprathu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rush02.h"
 
 int	count_lines(char *file_path)
@@ -27,6 +39,7 @@ int	count_lines(char *file_path)
 char	*get_val(char *str)
 {
 	int		i;
+	int		k;
 	int		len;
 	char	*val;
 
@@ -42,13 +55,13 @@ char	*get_val(char *str)
 	val = malloc(sizeof(char) * (len + 1));
 	if (!val)
 		return (NULL);
-	i = 0;
-	while (i < len)
+	k = 0;
+	while (k < len)
 	{
-		val[i] = str[i];
-		i++;
+		val[k] = str[i + k];
+		k++;
 	}
-	val[i] = '\0';
+	val[k] = '\0';
 	return (val);
 }
 
@@ -58,18 +71,29 @@ int	free_key_err(char *key)
 	return (0);
 }
 
-void	*free_dict_err(t_dict *dict, int count, int fd)
+int	parse_line(char *line, t_dict *entry)
 {
 	int	i;
+	int	k;
 
 	i = 0;
-	while (i < count)
-	{
-		free(dict[i].key);
-		free(dict[i].value);
+	while (line[i] >= '0' && line[i] <= '9')
 		i++;
-	}
-	free(dict);
-	close(fd);
-	return (NULL);
+	if (i == 0)
+		return (0);
+	entry->key = malloc(sizeof(char) * (i + 1));
+	if (!entry->key)
+		return (0);
+	k = -1;
+	while (++k < i)
+		entry->key[k] = line[k];
+	entry->key[k] = '\0';
+	while (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
+		i++;
+	if (line[i] != ':')
+		return (free_key_err(entry->key));
+	entry->value = get_val(&line[i + 1]);
+	if (!entry->value)
+		return (free_key_err(entry->key));
+	return (1);
 }

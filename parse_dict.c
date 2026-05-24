@@ -1,41 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_dict.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/24 16:18:51 by paprathu          #+#    #+#             */
+/*   Updated: 2026/05/24 16:18:51 by paprathu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rush02.h"
 
-int	parse_line(char *line, t_dict *entry)
+void	*free_dict_err(t_dict *dict, int count, int fd)
 {
 	int	i;
-	int	k;
 
 	i = 0;
-	while (line[i] >= '0' && line[i] <= '9')
+	while (i < count)
+	{
+		free(dict[i].key);
+		free(dict[i].value);
 		i++;
-	if (i == 0)
-		return (0);
-	entry->key = malloc(sizeof(char) * (i + 1));
-	if (!entry->key)
-		return (0);
-	k = -1;
-	while (++k < i)
-		entry->key[k] = line[k];
-	entry->key[k] = '\0';
-	while (line[i] == ' ' || (line[i] >= 9 && line[i] <= 13))
-		i++;
-	if (line[i] != ':')
-		return (free_key_err(entry->key));
-	entry->value = get_val(&line[i + 1]);
-	if (!entry->value)
-		return (free_key_err(entry->key));
-	return (1);
+	}
+	free(dict);
+	close(fd);
+	return (NULL);
 }
 
-static int	handle_newline(t_dict *dict, char *l, int *i, int *li)
+static t_dict	*finish_read(t_dict *dict, char *l, int i, int li)
 {
-	l[*i] = '\0';
-	if (l[0] != '\0' && !parse_line(l, &dict[*li]))
-		return (0);
-	if (l[0] != '\0')
-		(*li)++;
-	*i = -1;
-	return (1);
+	if (i > 0 && l[0] != '\0')
+	{
+		l[i] = '\0';
+		if (!parse_line(l, &dict[li++]))
+			return (NULL);
+	}
+	dict[li].key = NULL;
+	return (dict);
 }
 
 static t_dict	*read_lines(t_dict *dict, int fd, int *size)
@@ -50,20 +52,19 @@ static t_dict	*read_lines(t_dict *dict, int fd, int *size)
 	{
 		if (l[i] == '\n')
 		{
-			if (!handle_newline(dict, l, &i, &li))
-				return (free_dict_err(dict, li, fd));
+			l[i] = '\0';
+			if (l[0] != '\0' && !parse_line(l, &dict[li++]))
+				return (free_dict_err(dict, li - 1, fd));
+			i = -1;
 		}
 		if (i < 4095)
 			i++;
 	}
-	if (i > 0 && l[0] != '\0')
-	{
-		l[i] = '\0';
-		if (!parse_line(l, &dict[li++]))
-			return (free_dict_err(dict, li - 1, fd));
-	}
 	close(fd);
-	dict[li].key = NULL;
+	if (!finish_read(dict, l, i, li))
+		return (free_dict_err(dict, li, fd));
+	if (i > 0 && l[0] != '\0')
+		li++;
 	return (*size = li, dict);
 }
 
