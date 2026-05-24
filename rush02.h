@@ -39,6 +39,5 @@ int		ft_strlen(char *str);
 int		count_lines(char *file_path);
 void	write_space_or_comma(t_dict *dict);
 int		print_zero_case(t_dict *dict, int size);
-int		pre_check_all(t_dict *dict, int size, char *num_str);
 
 #endif

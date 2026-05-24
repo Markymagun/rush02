@@ -6,7 +6,7 @@
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/24 16:44:52 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 20:01:34 by paprathu         ###   ########.fr       */
+/*   Updated: 2026/05/24 20:17:02 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,16 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 {
 	int		groups;
 	char	chunk[4];
-	char	*z;
+	char	*zero_res;
 
-	z = find_in_dict(dict, size, "0");
-	if (num_str[0] == '0' && num_str[1] == '\0' && !z)
-		return (write(1, "Dict Error\n", 11), (void)0);
 	if (num_str[0] == '0' && num_str[1] == '\0')
-		return (write(1, z, ft_strlen(z)), write(1, "\n", 1), (void)0);
-	if (!pre_check_all(dict, size, num_str))
-		return (write(1, "Dict Error\n", 11), (void)0);
+	{
+		zero_res = find_in_dict(dict, size, "0");
+		if (!zero_res)
+			return (write(1, "Dict Error\n", 11), (void)0);
+		return (write(1, zero_res, ft_strlen(zero_res)),
+			write(1, "\n", 1), (void)0);
+	}
 	groups = (ft_strlen(num_str) + 2) / 3;
 	while (groups > 0)
 	{
@@ -90,8 +91,9 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 		if (groups < (int)(ft_strlen(num_str) + 2) / 3
 			&& !(chunk[0] == '0' && chunk[1] == '0' && chunk[2] == '0'))
 			write_space_or_comma(dict);
-		if (!process_group(dict, size, chunk, groups--))
+		if (!process_group(dict, size, chunk, groups))
 			return (write(1, "Dict Error\n", 11), (void)0);
+		groups--;
 	}
 	write(1, "\n", 1);
 }
@@ -118,40 +120,3 @@ void	run_standard_input_mode(t_dict *dict, int size)
 			input[i++] = buf;
 	}
 }
-
-// int	process_group(t_dict *dict, int size, char *chunk, int g_mode)
-// {
-// 	int	grp;
-// 	int	print;
-
-// 	grp = g_mode;
-// 	if (g_mode < 0)
-// 		grp = -g_mode;
-// 	print = (g_mode > 0);
-
-// 	if (chunk[0] != '0' && !print_hundreds(dict, size, chunk[0], print))
-// 		return (0);
-// 	if ((chunk[1] != '0' || chunk[2] != '0')
-// 		&& !print_tens_and_ones(dict, size, chunk + 1, print))
-// 		return (0);
-// 	if (grp > 1 && !(chunk[0] == '0' && chunk[1] == '0' && chunk[2] == '0')
-// 		&& !print_scale(dict, size, grp, print))
-// 		return (0);
-// 	return (1);
-// }
-
-// int	pre_check_all(t_dict *dict, int size, char *num_str)
-// {
-// 	int		groups;
-// 	char	chunk[4];
-
-// 	groups = (ft_strlen(num_str) + 2) / 3;
-// 	while (groups > 0)
-// 	{
-// 		get_chunk(num_str, chunk, ft_strlen(num_str), groups);
-// 		if (!process_group(dict, size, chunk, -groups))
-// 			return (0);
-// 		groups--;
-// 	}
-// 	return (1);
-// }
