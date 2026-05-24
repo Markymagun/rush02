@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/24 16:18:31 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 16:18:32 by paprathu         ###   ########.fr       */
+/*   Created: 2026/05/24 16:30:50 by paprathu          #+#    #+#             */
+/*   Updated: 2026/05/24 16:30:51 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,9 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 	if (num_str[0] == '0' && num_str[1] == '\0')
 	{
 		if (find_in_dict(dict, size, "0"))
-			write(1, find_in_dict(dict, size, "0"), ft_strlen(find_in_dict(dict,
-						size, "0")));
-		write(1, "\n", 1);
-		return ;
+			write(1, find_in_dict(dict, size, "0"),
+				ft_strlen(find_in_dict(dict, size, "0")));
+		return ((void)write(1, "\n", 1));
 	}
 	max_g = (ft_strlen(num_str) + 2) / 3;
 	groups = max_g;
@@ -93,10 +92,7 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 				&& chunk[2] == '0'))
 			write(1, " ", 1);
 		if (!process_group(dict, size, chunk, groups))
-		{
-			write(1, "Dict Error\n", 11);
-			return ;
-		}
+			return (write(1, "Dict Error\n", 11), (void)0);
 		groups--;
 	}
 	write(1, "\n", 1);
@@ -118,10 +114,7 @@ void	run_standard_input_mode(t_dict *dict, int size)
 				run_normal_mode(dict, size, input);
 			i = 0;
 		}
-		else
-		{
-			if (i < 4095)
-				input[i++] = buf;
-		}
+		else if (i < 4095)
+			input[i++] = buf;
 	}
 }
