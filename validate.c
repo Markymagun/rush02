@@ -17,21 +17,19 @@ static int	check_mode(char *str)
 	return (0);
 }
 
-static int	check_invalid_input(char *argv)
+int	check_invalid_input(char *argv)
 {
 	int	i;
 
 	i = 0;
 	if (argv[i] == '0' && input_len(argv) > 1)
 	{
-		write(1, "Error\n", 6);
 		return (0);
 	}
 	while (argv[i] != '\0')
 	{
 		if (argv[i] < '0' || argv[i] > '9')
 		{
-			write(1, "Error\n", 6);
 			return (0);
 		}
 		i++;
@@ -39,21 +37,20 @@ static int	check_invalid_input(char *argv)
 	return (1);
 }
 
-int	get_inputs(int argc, char **argv, char **dict_file, char **num_str)
+int	get_inputs(int argc, char **argv, char **dict_path, char **num_str)
 {
 	if (argc < 2 || argc > 3)
 	{
-		write(1, "Error\n", 6);
 		return (0);
 	}
 	if (argc == 2)
 	{
-		*dict_file = "numbers.dict";
+		*dict_path = "numbers.dict";
 		*num_str = argv[1];
 	}
 	else
 	{
-		*dict_file = argv[1];
+		*dict_path = argv[1];
 		*num_str = argv[2];
 	}
 	if (check_mode(*num_str) == 1)
