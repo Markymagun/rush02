@@ -5,7 +5,9 @@ int	main(int argc, char **argv)
 	char	*dict_file;
 	char	*dict_path;
 	char	*num_str;
+	int		dict_size;
 	int		mode;
+	t_dict	*dict;
 
 	mode = get_inputs(argc, argv, &dict_path, &num_str);
 	if (mode == 1)
