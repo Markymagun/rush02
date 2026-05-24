@@ -6,7 +6,7 @@
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/24 16:44:52 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 19:50:25 by paprathu         ###   ########.fr       */
+/*   Updated: 2026/05/24 20:01:34 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,3 +118,40 @@ void	run_standard_input_mode(t_dict *dict, int size)
 			input[i++] = buf;
 	}
 }
+
+// int	process_group(t_dict *dict, int size, char *chunk, int g_mode)
+// {
+// 	int	grp;
+// 	int	print;
+
+// 	grp = g_mode;
+// 	if (g_mode < 0)
+// 		grp = -g_mode;
+// 	print = (g_mode > 0);
+
+// 	if (chunk[0] != '0' && !print_hundreds(dict, size, chunk[0], print))
+// 		return (0);
+// 	if ((chunk[1] != '0' || chunk[2] != '0')
+// 		&& !print_tens_and_ones(dict, size, chunk + 1, print))
+// 		return (0);
+// 	if (grp > 1 && !(chunk[0] == '0' && chunk[1] == '0' && chunk[2] == '0')
+// 		&& !print_scale(dict, size, grp, print))
+// 		return (0);
+// 	return (1);
+// }
+
+// int	pre_check_all(t_dict *dict, int size, char *num_str)
+// {
+// 	int		groups;
+// 	char	chunk[4];
+
+// 	groups = (ft_strlen(num_str) + 2) / 3;
+// 	while (groups > 0)
+// 	{
+// 		get_chunk(num_str, chunk, ft_strlen(num_str), groups);
+// 		if (!process_group(dict, size, chunk, -groups))
+// 			return (0);
+// 		groups--;
+// 	}
+// 	return (1);
+// }
