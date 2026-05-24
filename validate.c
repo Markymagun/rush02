@@ -6,7 +6,7 @@
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/24 16:19:22 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 16:19:23 by paprathu         ###   ########.fr       */
+/*   Updated: 2026/05/24 17:54:44 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,25 @@ static int	check_mode(char *str)
 int	check_invalid_input(char *argv)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	if (argv[i] == '0' && ft_strlen(argv) > 1)
-	{
+	if (argv[i] == '+')
+		i++;
+	if (argv[i + 1] == '+')
 		return (0);
-	}
+	while (argv[i] == '0' && argv[i + 1] != '\0')
+		i++;
+	if (argv[i] == '\0')
+		return (0);
+	j = 0;
 	while (argv[i] != '\0')
 	{
 		if (argv[i] < '0' || argv[i] > '9')
-		{
 			return (0);
-		}
-		i++;
+		argv[j++] = argv[i++];
 	}
+	argv[j] = '\0';
 	return (1);
 }
 
