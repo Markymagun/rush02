@@ -6,7 +6,7 @@
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/24 16:44:52 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 16:44:53 by paprathu         ###   ########.fr       */
+/*   Updated: 2026/05/24 18:16:22 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	run_standard_input_mode(t_dict *dict, int size)
 			input[i] = '\0';
 			if (check_invalid_input(input) != 0)
 				run_normal_mode(dict, size, input);
+            else
+                write(1, "Error\n", 6);
 			i = 0;
 		}
 		else if (i < 4095)
