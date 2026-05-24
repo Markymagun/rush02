@@ -17,7 +17,7 @@ static int	check_mode(char *str)
 	return (0);
 }
 
-static int	check_invalid_input(char *argv)
+int	check_invalid_input(char *argv)
 {
 	int	i;
 

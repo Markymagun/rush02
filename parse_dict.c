@@ -27,8 +27,7 @@ int	parse_line(char *line, t_dict *entry)
 	return (1);
 }
 
-// 📦 แยกฟังก์ชันดึงบรรทัดออกมา เพื่อรักษา The Norm
-static t_dict	*read_lines(t_dict *dict, int fd)
+static t_dict	*read_lines(t_dict *dict, int fd, int *size)
 {
 	char	l[4096];
 	int		i;
@@ -45,10 +44,12 @@ static t_dict	*read_lines(t_dict *dict, int fd)
 				return (free_dict_err(dict, li - 1, fd));
 			i = -1;
 		}
-		i++;
+		if (i < 4095)
+			i++;
 	}
 	close(fd);
 	dict[li].key = NULL;
+	*size = li;
 	return (dict);
 }
 
@@ -79,5 +80,5 @@ t_dict	*parse_dict(char *file_path, int *size)
 	dict = init_dict(file_path, size, &fd);
 	if (!dict)
 		return (NULL);
-	return (read_lines(dict, fd)); // ส่งไปให้ลูปอ่านไฟล์ทำงาน
+	return (read_lines(dict, fd, size));
 }

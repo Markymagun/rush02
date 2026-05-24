@@ -31,16 +31,16 @@ int	main(int argc, char **argv)
 		write(1, "Error\n", 6);
 		return (1);
 	}
-	dict = parse_dict(dict_path, &dict_size); // 🌟 โหลดพจนานุกรม
+	dict = parse_dict(dict_path, &dict_size);
 	if (!dict)
 	{
 		write(1, "Dict Error\n", 11);
 		return (1);
 	}
 	if (mode == 1)
-		run_standard_input_mode(dict, dict_size); // 🌟 ส่งตัวแปรที่อัปเดตแล้ว
+		run_standard_input_mode(dict, dict_size);
 	else if (mode == 2)
-		run_normal_mode(dict, dict_size, num_str); // 🌟 ส่งตัวแปรที่อัปเดตแล้ว
-	free_dict(dict); // 🌟 คืนเมมโมรี่
+		run_normal_mode(dict, dict_size, num_str);
+	free_dict(dict);
 	return (0);
 }

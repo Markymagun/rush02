@@ -41,14 +41,12 @@ char	*get_val(char *str)
 	return (val);
 }
 
-// 🧽 ทีมทำความสะอาด 1: ใช้ลบ Key กรณีบรรทัดนั้นพังครึ่งทาง
 int	free_key_err(char *key)
 {
 	free(key);
 	return (0);
 }
 
-// 🧽 ทีมทำความสะอาด 2: ใช้ลบ Dictionary ทั้งเล่ม กรณีไฟล์พังกลางคัน
 void	*free_dict_err(t_dict *dict, int count, int fd)
 {
 	int	i;

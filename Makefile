@@ -2,7 +2,6 @@ NAME = rush-02
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-# 🌟 ใส่รายชื่อไฟล์ให้ครบ ห้ามมี # ปิดหน้า
 SRCS = main.c \
        validate.c \
        parse_dict.c \
