@@ -21,6 +21,7 @@ typedef struct s_dict
 {
 	char	*key;
 	char	*value;
+	int		is_en;
 }	t_dict;
 
 int		get_inputs(int argc, char **argv, char **dict_file, char **num_str);

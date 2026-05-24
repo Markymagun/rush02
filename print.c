@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/24 16:19:02 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 16:19:03 by paprathu         ###   ########.fr       */
+/*   Created: 2026/05/24 16:45:09 by paprathu          #+#    #+#             */
+/*   Updated: 2026/05/24 16:47:13 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ static int	print_hundreds(t_dict *dict, int size, char *str)
 	char	tmp[2];
 	char	*res;
 
-	if (str[0] != '0')
+	if (str[0] == '0')
+		return (1);
+	tmp[0] = str[0];
+	tmp[1] = '\0';
+	res = find_in_dict(dict, size, tmp);
+	if (!res || !find_in_dict(dict, size, "100"))
+		return (0);
+	write(1, res, ft_strlen(res));
+	write(1, " ", 1);
+	res = find_in_dict(dict, size, "100");
+	write(1, res, ft_strlen(res));
+	if (str[1] != '0' || str[2] != '0')
 	{
-		tmp[0] = str[0];
-		tmp[1] = '\0';
-		res = find_in_dict(dict, size, tmp);
-		if (!res)
-			return (0);
-		write(1, res, ft_strlen(res));
-		write(1, " ", 1);
-		res = find_in_dict(dict, size, "100");
-		if (!res)
-			return (0);
-		write(1, res, ft_strlen(res));
-		if (str[1] != '0' || str[2] != '0')
+		if (dict[0].is_en)
+			write(1, " and ", 5);
+		else
 			write(1, " ", 1);
 	}
 	return (1);
@@ -83,18 +85,18 @@ static int	print_tens_and_units(t_dict *dict, int size, char *str)
 		if (!res)
 			return (0);
 		write(1, res, ft_strlen(res));
-		if (str[2] != '0')
+		if (str[2] != '0' && dict[0].is_en)
+			write(1, "-", 1);
+		else if (str[2] != '0')
 			write(1, " ", 1);
 	}
+	tmp[0] = str[2];
+	tmp[1] = '\0';
+	res = find_in_dict(dict, size, tmp);
+	if (str[2] != '0' && !res)
+		return (0);
 	if (str[2] != '0')
-	{
-		tmp[0] = str[2];
-		tmp[1] = '\0';
-		res = find_in_dict(dict, size, tmp);
-		if (!res)
-			return (0);
 		write(1, res, ft_strlen(res));
-	}
 	return (1);
 }
 

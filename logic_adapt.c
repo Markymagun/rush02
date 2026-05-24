@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: paprathu <paprathu@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/24 16:30:50 by paprathu          #+#    #+#             */
-/*   Updated: 2026/05/24 16:30:51 by paprathu         ###   ########.fr       */
+/*   Created: 2026/05/24 16:44:52 by paprathu          #+#    #+#             */
+/*   Updated: 2026/05/24 16:44:53 by paprathu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,19 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 
 	if (num_str[0] == '0' && num_str[1] == '\0')
 	{
-		if (find_in_dict(dict, size, "0"))
-			write(1, find_in_dict(dict, size, "0"),
-				ft_strlen(find_in_dict(dict, size, "0")));
-		return ((void)write(1, "\n", 1));
+		write(1, find_in_dict(dict, size, "0"),
+			ft_strlen(find_in_dict(dict, size, "0")));
+		write(1, "\n", 1);
+		return ;
 	}
 	max_g = (ft_strlen(num_str) + 2) / 3;
 	groups = max_g;
 	while (groups > 0)
 	{
 		get_chunk(num_str, chunk, ft_strlen(num_str), groups);
-		if (groups < max_g && !(chunk[0] == '0' && chunk[1] == '0'
-				&& chunk[2] == '0'))
-			write(1, " ", 1);
+		if (groups < max_g && !(chunk[0] == '0'
+				&& chunk[1] == '0' && chunk[2] == '0'))
+			write_space_or_comma(dict);
 		if (!process_group(dict, size, chunk, groups))
 			return (write(1, "Dict Error\n", 11), (void)0);
 		groups--;
