@@ -6,7 +6,8 @@ static char	*make_suffix(int zero_count)
 	int		i;
 
 	key = malloc(sizeof(char) * (zero_count + 2));
-	if (!key) return (NULL);
+	if (!key)
+		return (NULL);
 	key[0] = '1';
 	i = 1;
 	while (i <= zero_count)
@@ -24,8 +25,10 @@ static void	get_chunk(char *num_str, char *chunk, int len, int groups)
 	c = 0;
 	while (c < 3)
 	{
-		if (start < 0) chunk[c] = '0';
-		else chunk[c] = num_str[start];
+		if (start < 0)
+			chunk[c] = '0';
+		else
+			chunk[c] = num_str[start];
 		start++;
 		c++;
 	}
@@ -39,13 +42,15 @@ static int	process_group(t_dict *dict, int size, char *chunk, int groups)
 
 	if (!(chunk[0] == '0' && chunk[1] == '0' && chunk[2] == '0'))
 	{
-		if (!print_three_digits(dict, size, chunk)) return (0);
+		if (!print_three_digits(dict, size, chunk))
+			return (0);
 		if (groups > 1)
 		{
 			s_key = make_suffix((groups - 1) * 3);
 			suf = find_in_dict(dict, size, s_key);
 			free(s_key);
-			if (!suf) return (0);
+			if (!suf)
+				return (0);
 			write(1, " ", 1);
 			write(1, suf, ft_strlen(suf));
 		}
@@ -62,7 +67,8 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 	if (num_str[0] == '0' && num_str[1] == '\0')
 	{
 		if (find_in_dict(dict, size, "0"))
-			write(1, find_in_dict(dict, size, "0"), ft_strlen(find_in_dict(dict, size, "0")));
+			write(1, find_in_dict(dict, size, "0"), ft_strlen(find_in_dict(dict,
+						size, "0")));
 		write(1, "\n", 1);
 		return ;
 	}
@@ -71,10 +77,14 @@ void	run_normal_mode(t_dict *dict, int size, char *num_str)
 	while (groups > 0)
 	{
 		get_chunk(num_str, chunk, ft_strlen(num_str), groups);
-		if (groups < max_g && !(chunk[0] == '0' && chunk[1] == '0' && chunk[2] == '0'))
+		if (groups < max_g && !(chunk[0] == '0' && chunk[1] == '0'
+				&& chunk[2] == '0'))
 			write(1, " ", 1);
 		if (!process_group(dict, size, chunk, groups))
-		{ write(1, "Dict Error\n", 11); return ; }
+		{
+			write(1, "Dict Error\n", 11);
+			return ;
+		}
 		groups--;
 	}
 	write(1, "\n", 1);

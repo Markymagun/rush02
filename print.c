@@ -25,13 +25,16 @@ static int	print_hundreds(t_dict *dict, int size, char *str)
 
 	if (str[0] != '0')
 	{
-		tmp[0] = str[0]; tmp[1] = '\0';
+		tmp[0] = str[0];
+		tmp[1] = '\0';
 		res = find_in_dict(dict, size, tmp);
-		if (!res) return (0);
+		if (!res)
+			return (0);
 		write(1, res, ft_strlen(res));
 		write(1, " ", 1);
 		res = find_in_dict(dict, size, "100");
-		if (!res) return (0);
+		if (!res)
+			return (0);
 		write(1, res, ft_strlen(res));
 		if (str[1] != '0' || str[2] != '0')
 			write(1, " ", 1);
@@ -61,17 +64,23 @@ static int	print_tens_and_units(t_dict *dict, int size, char *str)
 
 	if (str[1] != '0')
 	{
-		tmp[0] = str[1]; tmp[1] = '0'; tmp[2] = '\0';
+		tmp[0] = str[1];
+		tmp[1] = '0';
+		tmp[2] = '\0';
 		res = find_in_dict(dict, size, tmp);
-		if (!res) return (0);
+		if (!res)
+			return (0);
 		write(1, res, ft_strlen(res));
-		if (str[2] != '0') write(1, " ", 1);
+		if (str[2] != '0')
+			write(1, " ", 1);
 	}
 	if (str[2] != '0')
 	{
-		tmp[0] = str[2]; tmp[1] = '\0';
+		tmp[0] = str[2];
+		tmp[1] = '\0';
 		res = find_in_dict(dict, size, tmp);
-		if (!res) return (0);
+		if (!res)
+			return (0);
 		write(1, res, ft_strlen(res));
 	}
 	return (1);

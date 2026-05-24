@@ -27,6 +27,17 @@ int	parse_line(char *line, t_dict *entry)
 	return (1);
 }
 
+static int	handle_newline(t_dict *dict, char *l, int *i, int *li)
+{
+	l[*i] = '\0';
+	if (l[0] != '\0' && !parse_line(l, &dict[*li]))
+		return (0);
+	if (l[0] != '\0')
+		(*li)++;
+	*i = -1;
+	return (1);
+}
+
 static t_dict	*read_lines(t_dict *dict, int fd, int *size)
 {
 	char	l[4096];
@@ -39,18 +50,21 @@ static t_dict	*read_lines(t_dict *dict, int fd, int *size)
 	{
 		if (l[i] == '\n')
 		{
-			l[i] = '\0';
-			if (l[0] != '\0' && !parse_line(l, &dict[li++]))
-				return (free_dict_err(dict, li - 1, fd));
-			i = -1;
+			if (!handle_newline(dict, l, &i, &li))
+				return (free_dict_err(dict, li, fd));
 		}
 		if (i < 4095)
 			i++;
 	}
+	if (i > 0 && l[0] != '\0')
+	{
+		l[i] = '\0';
+		if (!parse_line(l, &dict[li++]))
+			return (free_dict_err(dict, li - 1, fd));
+	}
 	close(fd);
 	dict[li].key = NULL;
-	*size = li;
-	return (dict);
+	return (*size = li, dict);
 }
 
 static t_dict	*init_dict(char *file_path, int *size, int *fd)
