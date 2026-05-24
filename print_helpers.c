@@ -26,3 +26,15 @@ char	*find_dict_safe(t_dict *dict, int size, char *key, char check_char)
 		return (find_in_dict(dict, size, key));
 	return (NULL);
 }
+
+int	print_zero_case(t_dict *dict, int size)
+{
+	char	*zero_res;
+
+	zero_res = find_in_dict(dict, size, "0");
+	if (!zero_res)
+		return (0);
+	write(1, zero_res, ft_strlen(zero_res));
+	write(1, "\n", 1);
+	return (1);
+}
