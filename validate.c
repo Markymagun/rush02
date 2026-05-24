@@ -1,6 +1,6 @@
 #include "rush02.h"
 
-static int	input_len(char *str)
+int	ft_strlen(char *str)
 {
 	int	i;
 
@@ -12,17 +12,17 @@ static int	input_len(char *str)
 
 static int	check_mode(char *str)
 {
-	if (str[0] == '-' && input_len(str) == 1)
+	if (str[0] == '-' && ft_strlen(str) == 1)
 		return (1);
 	return (0);
 }
 
-int	check_invalid_input(char *argv)
+static int	check_invalid_input(char *argv)
 {
 	int	i;
 
 	i = 0;
-	if (argv[i] == '0' && input_len(argv) > 1)
+	if (argv[i] == '0' && ft_strlen(argv) > 1)
 	{
 		return (0);
 	}

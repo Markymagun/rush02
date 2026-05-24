@@ -27,25 +27,6 @@ int	parse_line(char *line, t_dict *entry)
 	return (1);
 }
 
-static t_dict	*init_dict(char *file_path, int *size, int *fd)
-{
-	t_dict	*dict;
-
-	*size = count_lines(file_path);
-	if (*size <= 0)
-		return (NULL);
-	dict = malloc(sizeof(t_dict) * (*size + 1));
-	if (!dict)
-		return (NULL);
-	*fd = open(file_path, O_RDONLY);
-	if (*fd < 0)
-	{
-		free(dict);
-		return (NULL);
-	}
-	return (dict);
-}
-
 // 📦 แยกฟังก์ชันดึงบรรทัดออกมา เพื่อรักษา The Norm
 static t_dict	*read_lines(t_dict *dict, int fd)
 {
@@ -68,6 +49,25 @@ static t_dict	*read_lines(t_dict *dict, int fd)
 	}
 	close(fd);
 	dict[li].key = NULL;
+	return (dict);
+}
+
+static t_dict	*init_dict(char *file_path, int *size, int *fd)
+{
+	t_dict	*dict;
+
+	*size = count_lines(file_path);
+	if (*size <= 0)
+		return (NULL);
+	dict = malloc(sizeof(t_dict) * (*size + 1));
+	if (!dict)
+		return (NULL);
+	*fd = open(file_path, O_RDONLY);
+	if (*fd < 0)
+	{
+		free(dict);
+		return (NULL);
+	}
 	return (dict);
 }
 
